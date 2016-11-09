@@ -1,0 +1,455 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EvidencijaDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Colloquium">
+          <Key>
+            <PropertyRef Name="ColloquiumID" />
+          </Key>
+          <Property Name="ColloquiumID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseID" Type="int" Nullable="false" />
+          <Property Name="LecturerID" Type="int" Nullable="false" />
+          <Property Name="ColloquiumDate" Type="date" Nullable="false" />
+          <Property Name="ColloquiumStart" Type="time" Precision="7" Nullable="false" />
+          <Property Name="ColloquiumText" Type="varchar" MaxLength="8000" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="CourseID" />
+          </Key>
+          <Property Name="CourseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LecturerID" Type="int" Nullable="false" />
+          <Property Name="CourseName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CourseAbbreviation" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Exams">
+          <Key>
+            <PropertyRef Name="ExamsID" />
+          </Key>
+          <Property Name="ExamsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseID" Type="int" Nullable="false" />
+          <Property Name="LecturerID" Type="int" Nullable="false" />
+          <Property Name="ExamDate" Type="date" Nullable="false" />
+          <Property Name="ExamStart" Type="time" Precision="7" Nullable="false" />
+          <Property Name="ExamText" Type="varchar" MaxLength="8000" />
+        </EntityType>
+        <EntityType Name="LecturerPerson">
+          <Key>
+            <PropertyRef Name="LecturerID" />
+          </Key>
+          <Property Name="LecturerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lectures">
+          <Key>
+            <PropertyRef Name="LecturesID" />
+          </Key>
+          <Property Name="LecturesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LecturerID" Type="int" Nullable="false" />
+          <Property Name="CourseID" Type="int" Nullable="false" />
+          <Property Name="LectureDate" Type="date" Nullable="false" />
+          <Property Name="LectureStart" Type="time" Precision="7" Nullable="false" />
+          <Property Name="LectureEnd" Type="time" Precision="7" Nullable="false" />
+          <Property Name="LectureText" Type="varchar" MaxLength="8000" />
+        </EntityType>
+        <Association Name="FK__Colloquiu__Cours__30F848ED">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Colloquium" Type="Self.Colloquium" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Colloquium">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Colloquiu__Lectu__31EC6D26">
+          <End Role="LecturerPerson" Type="Self.LecturerPerson" Multiplicity="1" />
+          <End Role="Colloquium" Type="Self.Colloquium" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LecturerPerson">
+              <PropertyRef Name="LecturerID" />
+            </Principal>
+            <Dependent Role="Colloquium">
+              <PropertyRef Name="LecturerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Course__Lecturer__267ABA7A">
+          <End Role="LecturerPerson" Type="Self.LecturerPerson" Multiplicity="1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LecturerPerson">
+              <PropertyRef Name="LecturerID" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="LecturerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Exams__CourseID__2D27B809">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Exams" Type="Self.Exams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Exams">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Exams__LecturerI__2E1BDC42">
+          <End Role="LecturerPerson" Type="Self.LecturerPerson" Multiplicity="1" />
+          <End Role="Exams" Type="Self.Exams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LecturerPerson">
+              <PropertyRef Name="LecturerID" />
+            </Principal>
+            <Dependent Role="Exams">
+              <PropertyRef Name="LecturerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Lectures__Course__2A4B4B5E">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Lectures" Type="Self.Lectures" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Lectures">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Lectures__Lectur__29572725">
+          <End Role="LecturerPerson" Type="Self.LecturerPerson" Multiplicity="1" />
+          <End Role="Lectures" Type="Self.Lectures" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LecturerPerson">
+              <PropertyRef Name="LecturerID" />
+            </Principal>
+            <Dependent Role="Lectures">
+              <PropertyRef Name="LecturerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EvidencijaDbModelStoreContainer">
+          <EntitySet Name="Colloquium" EntityType="Self.Colloquium" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Exams" EntityType="Self.Exams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LecturerPerson" EntityType="Self.LecturerPerson" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lectures" EntityType="Self.Lectures" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Colloquiu__Cours__30F848ED" Association="Self.FK__Colloquiu__Cours__30F848ED">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Colloquium" EntitySet="Colloquium" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Colloquiu__Lectu__31EC6D26" Association="Self.FK__Colloquiu__Lectu__31EC6D26">
+            <End Role="LecturerPerson" EntitySet="LecturerPerson" />
+            <End Role="Colloquium" EntitySet="Colloquium" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Course__Lecturer__267ABA7A" Association="Self.FK__Course__Lecturer__267ABA7A">
+            <End Role="LecturerPerson" EntitySet="LecturerPerson" />
+            <End Role="Course" EntitySet="Course" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Exams__CourseID__2D27B809" Association="Self.FK__Exams__CourseID__2D27B809">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Exams" EntitySet="Exams" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Exams__LecturerI__2E1BDC42" Association="Self.FK__Exams__LecturerI__2E1BDC42">
+            <End Role="LecturerPerson" EntitySet="LecturerPerson" />
+            <End Role="Exams" EntitySet="Exams" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Lectures__Course__2A4B4B5E" Association="Self.FK__Lectures__Course__2A4B4B5E">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Lectures" EntitySet="Lectures" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Lectures__Lectur__29572725" Association="Self.FK__Lectures__Lectur__29572725">
+            <End Role="LecturerPerson" EntitySet="LecturerPerson" />
+            <End Role="Lectures" EntitySet="Lectures" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EvidencijaDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Colloquium">
+          <Key>
+            <PropertyRef Name="ColloquiumID" />
+          </Key>
+          <Property Name="ColloquiumID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseID" Type="Int32" Nullable="false" />
+          <Property Name="LecturerID" Type="Int32" Nullable="false" />
+          <Property Name="ColloquiumDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ColloquiumStart" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="ColloquiumText" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Course" Relationship="Self.FK__Colloquiu__Cours__30F848ED" FromRole="Colloquium" ToRole="Course" />
+          <NavigationProperty Name="LecturerPerson" Relationship="Self.FK__Colloquiu__Lectu__31EC6D26" FromRole="Colloquium" ToRole="LecturerPerson" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="CourseID" />
+          </Key>
+          <Property Name="CourseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LecturerID" Type="Int32" Nullable="false" />
+          <Property Name="CourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CourseAbbreviation" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Colloquium" Relationship="Self.FK__Colloquiu__Cours__30F848ED" FromRole="Course" ToRole="Colloquium" />
+          <NavigationProperty Name="LecturerPerson" Relationship="Self.FK__Course__Lecturer__267ABA7A" FromRole="Course" ToRole="LecturerPerson" />
+          <NavigationProperty Name="Exams" Relationship="Self.FK__Exams__CourseID__2D27B809" FromRole="Course" ToRole="Exams" />
+          <NavigationProperty Name="Lectures" Relationship="Self.FK__Lectures__Course__2A4B4B5E" FromRole="Course" ToRole="Lectures" />
+        </EntityType>
+        <EntityType Name="Exams">
+          <Key>
+            <PropertyRef Name="ExamsID" />
+          </Key>
+          <Property Name="ExamsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseID" Type="Int32" Nullable="false" />
+          <Property Name="LecturerID" Type="Int32" Nullable="false" />
+          <Property Name="ExamDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ExamStart" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="ExamText" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Course" Relationship="Self.FK__Exams__CourseID__2D27B809" FromRole="Exams" ToRole="Course" />
+          <NavigationProperty Name="LecturerPerson" Relationship="Self.FK__Exams__LecturerI__2E1BDC42" FromRole="Exams" ToRole="LecturerPerson" />
+        </EntityType>
+        <EntityType Name="LecturerPerson">
+          <Key>
+            <PropertyRef Name="LecturerID" />
+          </Key>
+          <Property Name="LecturerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Colloquium" Relationship="Self.FK__Colloquiu__Lectu__31EC6D26" FromRole="LecturerPerson" ToRole="Colloquium" />
+          <NavigationProperty Name="Course" Relationship="Self.FK__Course__Lecturer__267ABA7A" FromRole="LecturerPerson" ToRole="Course" />
+          <NavigationProperty Name="Exams" Relationship="Self.FK__Exams__LecturerI__2E1BDC42" FromRole="LecturerPerson" ToRole="Exams" />
+          <NavigationProperty Name="Lectures" Relationship="Self.FK__Lectures__Lectur__29572725" FromRole="LecturerPerson" ToRole="Lectures" />
+        </EntityType>
+        <EntityType Name="Lectures">
+          <Key>
+            <PropertyRef Name="LecturesID" />
+          </Key>
+          <Property Name="LecturesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LecturerID" Type="Int32" Nullable="false" />
+          <Property Name="CourseID" Type="Int32" Nullable="false" />
+          <Property Name="LectureDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LectureStart" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="LectureEnd" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="LectureText" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Course" Relationship="Self.FK__Lectures__Course__2A4B4B5E" FromRole="Lectures" ToRole="Course" />
+          <NavigationProperty Name="LecturerPerson" Relationship="Self.FK__Lectures__Lectur__29572725" FromRole="Lectures" ToRole="LecturerPerson" />
+        </EntityType>
+        <Association Name="FK__Colloquiu__Cours__30F848ED">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Colloquium" Type="Self.Colloquium" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Colloquium">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Colloquiu__Lectu__31EC6D26">
+          <End Role="LecturerPerson" Type="Self.LecturerPerson" Multiplicity="1" />
+          <End Role="Colloquium" Type="Self.Colloquium" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LecturerPerson">
+              <PropertyRef Name="LecturerID" />
+            </Principal>
+            <Dependent Role="Colloquium">
+              <PropertyRef Name="LecturerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Course__Lecturer__267ABA7A">
+          <End Role="LecturerPerson" Type="Self.LecturerPerson" Multiplicity="1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LecturerPerson">
+              <PropertyRef Name="LecturerID" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="LecturerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Exams__CourseID__2D27B809">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Exams" Type="Self.Exams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Exams">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Lectures__Course__2A4B4B5E">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="Lectures" Type="Self.Lectures" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Lectures">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Exams__LecturerI__2E1BDC42">
+          <End Role="LecturerPerson" Type="Self.LecturerPerson" Multiplicity="1" />
+          <End Role="Exams" Type="Self.Exams" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LecturerPerson">
+              <PropertyRef Name="LecturerID" />
+            </Principal>
+            <Dependent Role="Exams">
+              <PropertyRef Name="LecturerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Lectures__Lectur__29572725">
+          <End Role="LecturerPerson" Type="Self.LecturerPerson" Multiplicity="1" />
+          <End Role="Lectures" Type="Self.Lectures" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LecturerPerson">
+              <PropertyRef Name="LecturerID" />
+            </Principal>
+            <Dependent Role="Lectures">
+              <PropertyRef Name="LecturerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EvidencijaDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Colloquium" EntityType="Self.Colloquium" />
+          <EntitySet Name="Course" EntityType="Self.Course" />
+          <EntitySet Name="Exams" EntityType="Self.Exams" />
+          <EntitySet Name="LecturerPerson" EntityType="Self.LecturerPerson" />
+          <EntitySet Name="Lectures" EntityType="Self.Lectures" />
+          <AssociationSet Name="FK__Colloquiu__Cours__30F848ED" Association="Self.FK__Colloquiu__Cours__30F848ED">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Colloquium" EntitySet="Colloquium" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Colloquiu__Lectu__31EC6D26" Association="Self.FK__Colloquiu__Lectu__31EC6D26">
+            <End Role="LecturerPerson" EntitySet="LecturerPerson" />
+            <End Role="Colloquium" EntitySet="Colloquium" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Course__Lecturer__267ABA7A" Association="Self.FK__Course__Lecturer__267ABA7A">
+            <End Role="LecturerPerson" EntitySet="LecturerPerson" />
+            <End Role="Course" EntitySet="Course" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Exams__CourseID__2D27B809" Association="Self.FK__Exams__CourseID__2D27B809">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Exams" EntitySet="Exams" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Lectures__Course__2A4B4B5E" Association="Self.FK__Lectures__Course__2A4B4B5E">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Lectures" EntitySet="Lectures" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Exams__LecturerI__2E1BDC42" Association="Self.FK__Exams__LecturerI__2E1BDC42">
+            <End Role="LecturerPerson" EntitySet="LecturerPerson" />
+            <End Role="Exams" EntitySet="Exams" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Lectures__Lectur__29572725" Association="Self.FK__Lectures__Lectur__29572725">
+            <End Role="LecturerPerson" EntitySet="LecturerPerson" />
+            <End Role="Lectures" EntitySet="Lectures" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EvidencijaDbModelStoreContainer" CdmEntityContainer="EvidencijaDbEntities">
+          <EntitySetMapping Name="Colloquium">
+            <EntityTypeMapping TypeName="EvidencijaDbModel.Colloquium">
+              <MappingFragment StoreEntitySet="Colloquium">
+                <ScalarProperty Name="ColloquiumID" ColumnName="ColloquiumID" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="LecturerID" ColumnName="LecturerID" />
+                <ScalarProperty Name="ColloquiumDate" ColumnName="ColloquiumDate" />
+                <ScalarProperty Name="ColloquiumStart" ColumnName="ColloquiumStart" />
+                <ScalarProperty Name="ColloquiumText" ColumnName="ColloquiumText" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Course">
+            <EntityTypeMapping TypeName="EvidencijaDbModel.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="LecturerID" ColumnName="LecturerID" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="CourseAbbreviation" ColumnName="CourseAbbreviation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Exams">
+            <EntityTypeMapping TypeName="EvidencijaDbModel.Exams">
+              <MappingFragment StoreEntitySet="Exams">
+                <ScalarProperty Name="ExamsID" ColumnName="ExamsID" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="LecturerID" ColumnName="LecturerID" />
+                <ScalarProperty Name="ExamDate" ColumnName="ExamDate" />
+                <ScalarProperty Name="ExamStart" ColumnName="ExamStart" />
+                <ScalarProperty Name="ExamText" ColumnName="ExamText" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LecturerPerson">
+            <EntityTypeMapping TypeName="EvidencijaDbModel.LecturerPerson">
+              <MappingFragment StoreEntitySet="LecturerPerson">
+                <ScalarProperty Name="LecturerID" ColumnName="LecturerID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lectures">
+            <EntityTypeMapping TypeName="EvidencijaDbModel.Lectures">
+              <MappingFragment StoreEntitySet="Lectures">
+                <ScalarProperty Name="LecturesID" ColumnName="LecturesID" />
+                <ScalarProperty Name="LecturerID" ColumnName="LecturerID" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="LectureDate" ColumnName="LectureDate" />
+                <ScalarProperty Name="LectureStart" ColumnName="LectureStart" />
+                <ScalarProperty Name="LectureEnd" ColumnName="LectureEnd" />
+                <ScalarProperty Name="LectureText" ColumnName="LectureText" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

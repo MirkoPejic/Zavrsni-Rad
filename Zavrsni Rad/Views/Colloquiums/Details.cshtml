@@ -1,0 +1,60 @@
+﻿@model Zavrsni_Rad.Models.Colloquium
+
+@{
+    ViewBag.Title = "Detalji";
+}
+
+<h2>Detalji kolokvija</h2>
+
+<div>
+    @*<h4>Kolokvij</h4>*@
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ColloquiumDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ColloquiumDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ColloquiumStart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ColloquiumStart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ColloquiumText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ColloquiumText)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Course.CourseName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Course.CourseName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LecturerPerson.LecturerID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LecturerPerson.Title)
+            @Html.DisplayFor(model => model.LecturerPerson.Name)
+            @Html.DisplayFor(model => model.LecturerPerson.Surname)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Urediti", "Edit", new { id = Model.ColloquiumID }) |
+    @Html.ActionLink("Povratak na listu kolokvija", "Index")
+</p>

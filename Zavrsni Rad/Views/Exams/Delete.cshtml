@@ -1,0 +1,66 @@
+﻿@model Zavrsni_Rad.Models.Exams
+
+@{
+    ViewBag.Title = "Obrisati";
+}
+
+<h2>Obrisati ispit</h2>
+
+<h3>Da li ste sigurni da želite obrisati?</h3>
+<div>
+    @*<h4>Exams</h4>*@
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ExamDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExamDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExamStart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExamStart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExamText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExamText)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Course.CourseName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Course.CourseName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LecturerPerson.LecturerID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LecturerPerson.Title)
+            @Html.DisplayFor(model => model.LecturerPerson.Name)
+            @Html.DisplayFor(model => model.LecturerPerson.Surname)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Obrisati" class="btn btn-default" /> |
+            @Html.ActionLink("Povratak na listu ispita", "Index")
+        </div>
+    }
+</div>

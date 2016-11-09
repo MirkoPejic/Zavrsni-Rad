@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Zavrsni_Rad.Models.Exams>
+
+@{
+    ViewBag.Title = "Ispiti";
+}
+
+<h2>Ispiti</h2>
+
+<p>
+    @Html.ActionLink("Dodaj novi ispit", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ExamDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExamStart)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExamText)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Course.CourseName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LecturerPerson.LecturerID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExamDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExamStart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExamText)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Course.CourseName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LecturerPerson.Title)
+            @Html.DisplayFor(modelItem => item.LecturerPerson.Name)
+            @Html.DisplayFor(modelItem => item.LecturerPerson.Surname)
+        </td>
+        <td>
+            @Html.ActionLink("Urediti", "Edit", new { id=item.ExamsID }) |
+            @Html.ActionLink("Detalji", "Details", new { id=item.ExamsID }) |
+            @Html.ActionLink("Obrisati", "Delete", new { id=item.ExamsID })
+        </td>
+    </tr>
+}
+
+</table>

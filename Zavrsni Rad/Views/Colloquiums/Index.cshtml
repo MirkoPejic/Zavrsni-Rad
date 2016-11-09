@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Zavrsni_Rad.Models.Colloquium>
+
+@{
+    ViewBag.Title = "Kolokviji";
+}
+
+<h2>Kolokviji</h2>
+
+<p>
+    @Html.ActionLink("Dodaj novi kolokvij", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ColloquiumDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ColloquiumStart)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ColloquiumText)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Course.CourseName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LecturerPerson.LecturerID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ColloquiumDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ColloquiumStart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ColloquiumText)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Course.CourseName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LecturerPerson.Title)
+            @Html.DisplayFor(modelItem => item.LecturerPerson.Name)
+            @Html.DisplayFor(modelItem => item.LecturerPerson.Surname)
+        </td>
+        <td>
+            @Html.ActionLink("Urediti", "Edit", new { id=item.ColloquiumID }) |
+            @Html.ActionLink("Detalji", "Details", new { id=item.ColloquiumID }) |
+            @Html.ActionLink("Obrisati", "Delete", new { id=item.ColloquiumID })
+        </td>
+    </tr>
+}
+
+</table>

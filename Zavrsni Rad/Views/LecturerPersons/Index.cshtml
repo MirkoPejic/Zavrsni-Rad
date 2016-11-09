@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Zavrsni_Rad.Models.LecturerPerson>
+
+@{
+    ViewBag.Title = "Predavači";
+}
+
+<h2>Predavači</h2>
+
+<p>
+    @Html.ActionLink("Dodaj predavača", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Surname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Surname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.ActionLink("Urediti", "Edit", new { id=item.LecturerID }) |
+            @Html.ActionLink("Detalji", "Details", new { id=item.LecturerID }) |
+            @Html.ActionLink("Obrisati", "Delete", new { id=item.LecturerID })
+        </td>
+    </tr>
+}
+
+</table>

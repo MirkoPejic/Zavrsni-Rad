@@ -1,0 +1,44 @@
+﻿@model Zavrsni_Rad.Models.Course
+
+@{
+    ViewBag.Title = "Detalji";
+}
+
+<h2>Detalji kolegija</h2>
+
+<div>
+    @*<h4>Course</h4>*@
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CourseName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CourseName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CourseAbbreviation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CourseAbbreviation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LecturerPerson.LecturerID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LecturerPerson.Title)
+            @Html.DisplayFor(model => model.LecturerPerson.Name)
+            @Html.DisplayFor(model => model.LecturerPerson.Surname)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Urediti", "Edit", new { id = Model.CourseID }) |
+    @Html.ActionLink("Povratak na listu kolegija", "Index")
+</p>

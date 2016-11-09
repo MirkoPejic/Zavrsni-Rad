@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Zavrsni_Rad.Models.Course>
+
+@{
+    ViewBag.Title = "Kolegiji";
+}
+
+<h2>Kolegiji</h2>
+
+<p>
+    @Html.ActionLink("Dodaj novi kolegij", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CourseAbbreviation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LecturerPerson.LecturerID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CourseAbbreviation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LecturerPerson.Title)
+            @Html.DisplayFor(modelItem => item.LecturerPerson.Name)
+            @Html.DisplayFor(modelItem => item.LecturerPerson.Surname)
+        </td>
+        <td>
+            @Html.ActionLink("Urediti", "Edit", new { id=item.CourseID }) |
+            @Html.ActionLink("Detalji", "Details", new { id=item.CourseID }) |
+            @Html.ActionLink("Obrisati", "Delete", new { id=item.CourseID })
+        </td>
+    </tr>
+}
+
+</table>
